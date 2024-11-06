@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задача 1</title>
+</head>
+<body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById("matrixForm")
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const n1 = parseFloat(document.getElementsByName('n1')[0].value);
+      const n2 = parseFloat(document.getElementsByName('n2')[0].value);
+      const n3 = parseFloat(document.getElementsByName('n3')[0].value);
+      const n4 = parseFloat(document.getElementsByName('n4')[0].value);
+      const n5 = parseFloat(document.getElementsByName('n5')[0].value);
+      const n6 = parseFloat(document.getElementsByName('n6')[0].value);
+
+      if (isNaN(n1) || isNaN(n2) || isNaN(n3) || isNaN(n4) || isNaN(n5) || isNaN(n6)) {
+        document.getElementById('result').textContent = 'Пожалуйста, введите корректные числа.';
+        return 0;
+      }
+      const det = n1*n5-n2*n4
+      if (det===0){
+        document.getElementById('result').textContent = 'Определитель равен нулю. Метод Крамера нельзя использовать.';
+      }
+      else{
+        document.getElementById('result').textContent = `x = ${(n3*n5-n2*n6)/det}, y = ${(n1*n6-n3*n4)/det}`;
+      }
+    })
+  });
+</script>
+<form id="matrixForm">
+  <label>
+    <input type="text" name="n1"> x +
+  </label>
+  <label>
+    <input type="text" name="n2"> y =
+  </label>
+  <label>
+    <input type="text" name="n3">
+  </label>
+  <br>
+  <label>
+    <input type="text" name="n4"> x +
+  </label>
+  <label>
+    <input type="text" name="n5"> y =
+  </label>
+  <label>
+    <input type="text" name="n6">
+  </label>
+  <br>
+  <button type="submit">Решить!</button>
+</form>
+<p id="result"></p>
+</body>
+</html>
