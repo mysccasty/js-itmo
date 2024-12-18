@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 2</title>
+</head>
+<body>
+<script>
+  function isPrime(num) {
+    if (num < 2) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+      if (num % i === 0) return false;
+    }
+    return true;
+  }
+  function countPrime(N) {
+    if (N < 2) {
+      console.log(0);
+      return 0;
+    }
+    let count = 0;
+    for (let i = 2; i <= N; i++) {
+      if (isPrime(i)) {
+        count++;
+      }
+    }
+
+    console.log(count);
+    return count;
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById("primeForm")
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const number = parseFloat(document.getElementsByName('number')[0].value);
+      document.getElementById("result").textContent = `${countPrime(number)}`;
+    })
+  });
+</script>
+<form id="primeForm">
+  <label>Введите число больше 2:
+    <br>
+    <input  type="number" name="number" placeholder="Верхняя граница">
+  </label>
+  <br>
+  <button type="submit" style="margin: 1rem 0">Вычислить!</button>
+</form>
+<div><span>
+  Результат: <span id="result"></span>
+</span></div>
+</body>
+</html>
