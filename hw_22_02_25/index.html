@@ -9,7 +9,10 @@
 <article></article>
 <script>
     document.getElementById('bt').addEventListener('click', function() {
-        const article = document.querySelector('body article:first-child');
+        const article = document.querySelector('article');
+        if (!article) {
+            return;
+        }
         for (let i = 0; i < 1000; i++) {
             const div = document.createElement('div');
             div.id = 'i' + i;
