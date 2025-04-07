@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DIV Generator</title>
+    <title></title>
+    <meta charset="utf-8" />
 </head>
 <body>
-<article></article>
 <h4>472113</h4>
-<button id="bt" onclick="
-        const article = document.querySelector('article');
-        if (!article) {
-            return;
-        }
-        for (let i = 0; i < 1000; i++) {
-            const div = document.createElement('div');
-            div.id = 'i' + i;
-            article.appendChild(div);
-        }
-">Generate 1000 DIVs</button>
+<button
+        id="bt"
+        onclick="
+    const article = document.createElement('article');
+    document.body.prepend(article);
+    for (let i = 0; i < 1000; i++) {
+      const div = document.createElement('div');
+      div.id = 'i' + i;
+      article.appendChild(div);
+    }
+  "
+>
+    done
+</button>
 </body>
 </html>
