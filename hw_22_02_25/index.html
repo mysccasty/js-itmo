@@ -6,9 +6,7 @@
 <body>
 <article></article>
 <h4>472113</h4>
-<button id="bt">Generate 1000 DIVs</button>
-<script>
-    document.getElementById('bt').addEventListener('click', function() {
+<button id="bt" onclick="
         const article = document.querySelector('article');
         if (!article) {
             return;
@@ -18,7 +16,6 @@
             div.id = 'i' + i;
             article.appendChild(div);
         }
-    });
-</script>
+">Generate 1000 DIVs</button>
 </body>
 </html>
