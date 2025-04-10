@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+      <title>Плейлист детских песен</title>
+</head>
+<body>
+<h1>Детские песни</h1>
+<div style="display: flex; flex-direction: column; width: 30%; gap: 10px">
+  <label for="audio_select">Выберите композицию:</label>
+  <select id="audio_select">
+    <option></option>
+    <option value="Антошка.mp3">Антошка</option>
+    <option value="В Траве Сидел Кузнечик.mp3">В Траве Сидел Кузнечик</option>
+    <option value="Облака.mp3">Облака</option>
+    <option value="От Улыбки.mp3">От Улыбки</option>
+    <option value="Песня Крокодилы Гены.mp3">Песня Крокодилы Гены</option>
+  </select>
+
+  <audio id="play" controls></audio>
+</div>
+
+
+<script>
+  const audioSelect = document.getElementById("audio_select");
+  audioSelect.addEventListener("change", async function() {
+    const file = this.value;
+    const audio = document.getElementById('play');
+    if (!file) {
+      audio.src = "";
+      return;
+    }
+
+    const response = await fetch(file);
+    const blob = await response.blob();
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      audio.src = e.target.result;
+      audio.play();
+    };
+
+    reader.readAsDataURL(blob);
+  })
+</script>
+</body>
+</html>

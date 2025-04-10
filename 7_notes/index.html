@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>7 Нот</title>
+    <style>
+        button{
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #0d6efd;
+            color: white;
+            font-weight: bold;
+            border: none;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Мелодия</h1>
+
+<div style="display: flex; gap: 10px; margin-bottom: 10px;">
+    <button class="note-btn" data-note="C4">До</button>
+    <button class="note-btn" data-note="D4">Ре</button>
+    <button class="note-btn" data-note="E4">Ми</button>
+    <button class="note-btn" data-note="F4">Фа</button>
+    <button class="note-btn" data-note="G4">Соль</button>
+    <button class="note-btn" data-note="A4">Ля</button>
+    <button class="note-btn" data-note="B4">Си</button>
+</div>
+
+<button id="playAll">Проиграть всю мелодию</button>
+
+<script>
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const noteFrequencies = {
+        'C4': 261.63,
+        'D4': 293.66,
+        'E4': 329.63,
+        'F4': 349.23,
+        'G4': 392.00,
+        'A4': 440.00,
+        'B4': 493.88,
+        'C5': 523.25
+    };
+
+    const melody = [
+        {note: 'G4', duration: 0.3},
+        {note: 'E4', duration: 0.3},
+        {note: 'A4', duration: 0.6},
+        {note: 'G4', duration: 0.6},
+        {note: 'D4', duration: 0.3},
+        {note: 'F4', duration: 0.3},
+        {note: 'E4', duration: 0.3},
+        {note: 'D4', duration: 0.3},
+        {note: 'C4', duration: 1.5},
+    ];
+
+    function playNote(note, time, duration = 0.5) {
+        const frequency = noteFrequencies[note];
+        if (!frequency) return;
+
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.type = 'triangle';
+        oscillator.frequency.value = frequency;
+
+        gainNode.gain.setValueAtTime(0.8, time);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.start(time);
+        oscillator.stop(time + duration);
+    }
+
+    document.querySelectorAll('.note-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            playNote(button.dataset.note, audioContext.currentTime);
+        });
+    });
+
+    document.getElementById('playAll').addEventListener('click', () => {
+        let time = audioContext.currentTime;
+
+        melody.forEach((item, index) => {
+            playNote(item.note, time, item.duration)
+
+            time += item.duration;
+
+            if (index < melody.length - 1) {
+                time += 0.05;
+            }
+        });
+    });
+
+    document.body.addEventListener('click', function initAudioContext() {
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+        document.body.removeEventListener('click', initAudioContext);
+    }, { once: true });
+</script>
+</body>
+</html>
